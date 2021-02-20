@@ -2,6 +2,8 @@ package com.dhw.entity;
 
 import lombok.*;
 
+import java.util.Date;
+
 /**
  * 管理员实体类
  *
@@ -39,15 +41,22 @@ public class Admin {
     /**
      * 创建时间
      */
-    private String createTime;
+    private Date createTime;
 
     /**
      * 修改时间
      */
-    private String updateTime;
+    private Date updateTime;
 
     /**
      * 逻辑删除
      */
     private Integer deleted;
+
+    public Admin(String loginAcct, String userPassword, String userName, String email) {
+        this.loginAcct = loginAcct;
+        this.userPassword = userPassword;
+        this.userName = userName;
+        this.email = email;
+    }
 }

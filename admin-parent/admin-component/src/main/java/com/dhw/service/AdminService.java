@@ -10,7 +10,6 @@ public interface AdminService {
     /**
      * 添加管理员
      * @param admin 管理员对象
-     * @return
      */
-    int addAdmin(Admin admin);
+    void addAdmin(Admin admin);
 }

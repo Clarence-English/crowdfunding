@@ -1,5 +1,6 @@
 import com.dhw.dao.AdminMapper;
 import com.dhw.entity.Admin;
+import com.dhw.service.AdminService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -13,14 +14,17 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:application.xml"})
-public class testDataSource {
+@ContextConfiguration(locations = {"classpath:spring-persist-tx.xml"})
+public class testMethod {
 
     @Autowired
     DataSource dataSource;
 
     @Autowired
     AdminMapper adminMapper;
+
+    @Autowired
+    AdminService adminService;
 
     @Test
     public void testConnection() throws SQLException {
@@ -29,15 +33,15 @@ public class testDataSource {
     }
 
     @Test
-    public void testSelectById(){
+    public void testSelectById() {
         Admin admin = adminMapper.selectByPrimaryKey(1);
         System.out.println(admin);
     }
 
     @Test
-    public void test03(){
+    public void test03() {
         //获取Logger对象，这里传入的Class就是当前打印日志的类
-        Logger logger = LoggerFactory.getLogger(testDataSource.class);
+        Logger logger = LoggerFactory.getLogger(testMethod.class);
         //等级 DEBUG < INFO < WARN < ERROR
         logger.debug("I am DEBUG!!!");
 
@@ -48,5 +52,14 @@ public class testDataSource {
         logger.error("I am ERROR!!!");
 
     }
+
+
+    @Test
+    public void testTx() {
+        Admin admin = new Admin("zhangsan", "12345", "张三", "zhangsan@163.com");
+        adminService.addAdmin(admin);
+
+    }
+
 
 }
