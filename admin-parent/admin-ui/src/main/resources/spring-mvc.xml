@@ -7,11 +7,19 @@
                            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
                            http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
 ">
-
     <!-- 扫描controller注解 -->
-    <context:component-scan base-package="com.dhw.controller"/>
+    <context:component-scan base-package="com.dhw" use-default-filters="false">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+        <context:include-filter type="annotation"
+                                expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
+    </context:component-scan>
 
-    <!--viewResolver-->
+    <!-- 配置SpringMVC的注解驱动 -->
+    <mvc:annotation-driven/>
+    <!-- 访问静态资源 -->
+    <mvc:default-servlet-handler/>
+
+    <!-- viewResolver -->
     <bean class="org.thymeleaf.spring4.view.ThymeleafViewResolver">
         <property name="characterEncoding" value="UTF-8"/>
         <property name="templateEngine" ref="templateEngine"/>
@@ -28,7 +36,4 @@
         <property name="characterEncoding" value="UTF-8"/>
         <property name="cacheable" value="false"/>
     </bean>
-
-    <mvc:annotation-driven/>
-    <mvc:default-servlet-handler/>
 </beans>

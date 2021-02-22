@@ -4,6 +4,18 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
 
+    <!--将ContextLoaderListener加入容器-->
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+
+    <!--配置ContextLoaderListener，加载Spring配置文件-->
+    <!--contextConfigLocation需要的内容-->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath:spring-persist-*.xml</param-value>
+    </context-param>
+
     <!--配置CharacterEncodingFilter，解决乱码问题-->
     <!--如果web.xml中存在多个Filter，则此Filter必须作为过滤器链的第一个Filter-->
     <filter>
@@ -31,18 +43,6 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
-    <!--配置ContextLoaderListener，加载Spring配置文件-->
-    <!--contextConfigLocation需要的内容-->
-    <context-param>
-        <param-name>contextConfigLocation</param-name>
-        <param-value>classpath:spring-persist-*.xml</param-value>
-    </context-param>
-
-    <!--将ContextLoaderListener加入容器-->
-    <listener>
-        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-    </listener>
-
     <!--配置DispatcherServlet（即配置SpringMVC的前端控制器）-->
     <servlet>
         <servlet-name>dispatcherServlet</servlet-name>
@@ -52,7 +52,9 @@
             <param-name>contextConfigLocation</param-name>
             <param-value>classpath:spring-mvc.xml</param-value>
         </init-param>
-        <!--使DispatcherServlet在Web应用启动时就创建对象并初始化-->
+        <!-- Servlet默认生命周期中，创建对象是在第一次接收到请求时 -->
+        <!-- 而DispatcherServlet创建对象后有大量的"框架初始化"工作，不适合在第一次请求时来做 -->
+        <!-- 设置load-on-startup就是为了让DispatcherServlet在web应用启动时创建对象、初始化 -->
         <load-on-startup>1</load-on-startup>
     </servlet>
 

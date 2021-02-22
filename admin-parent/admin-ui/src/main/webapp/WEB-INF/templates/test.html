@@ -6,5 +6,7 @@
 </head>
 <body>
 <p th:text="${name}">Spring boot集成 Thymeleaf</p>
+<div th:text="${#request.getServerName()}"></div>
+<div th:text="${#servletContext}"></div>
 </body>
 </html>

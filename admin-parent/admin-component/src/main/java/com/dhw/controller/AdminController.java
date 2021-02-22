@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class AdminController {
 
-    @RequestMapping("/test")
+    @RequestMapping("/ssm.html")
     public String test(Model model){
         System.out.println("---------------");
         model.addAttribute("name","张三");
